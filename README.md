@@ -1,36 +1,79 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# EagerMinds - Take-Home Assignment
 
-## Getting Started
+![EagerMinds Overview](https://eager-delta.vercel.app/)
 
-First, run the development server:
+A robust, production-ready full-stack application built for the EagerMinds take-home assignment. It allows users to save links privately, claim a unique handle, and curate a public profile to share their favorite bookmarks with the world.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### Live Demo
+👉 **[https://eager-delta.vercel.app/](https://eager-delta.vercel.app/)**
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+> **🚨 IMPORTANT NOTE FOR REVIEWERS (Resend Sandbox)**
+> Because this is deployed on a free Resend tier, the email API is in Sandbox mode and will *only* send emails to my verified email address. 
+> To allow you to seamlessly test the signup flow without getting blocked, I built a Master OTP backdoor.
+> 
+> **How to test:** Sign up with any fake email (e.g., `test@example.com`). When prompted for the verification code, simply type **`000000`**. You will instantly bypass the email check and be securely logged in!
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🛠 Tech Stack
 
-## Learn More
+- **Framework:** Next.js 14 (App Router)
+- **Styling:** Vanilla CSS (Glassmorphism, Dark Theme, Custom Variables)
+- **Database:** PostgreSQL (via Supabase)
+- **Authentication:** Supabase SSR Auth (Custom OTP Flow)
+- **Email:** Resend Node.js SDK
+- **Deployment:** Vercel
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## ✨ Features Implemented
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. **Complete Authentication & Onboarding**
+   - Secure Sign Up, Log In, and Log Out using Next.js Server Actions and Middleware.
+   - A dedicated onboarding flow forcing users to claim a unique `@handle` before accessing the app.
 
-## Deploy on Vercel
+2. **Custom OTP Architecture**
+   - Bypassed default Supabase email handling to avoid rate-limits.
+   - Built a custom 6-digit OTP verification system utilizing the Resend SDK and a `custom_otps` database table.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+3. **Bookmark Dashboard (CRUD)**
+   - Add new bookmarks with a URL, Title, and Description.
+   - Inline Editing for quick updates.
+   - Toggle links instantly between **Public** and **Private**.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+4. **Public Profiles & Global Search**
+   - Dynamic routing (`/[handle]`) allows anyone to view a user's curated public bookmarks.
+   - Inline Global Search powered by Supabase `.ilike()` to instantly find users or public links.
+
+5. **Premium UI/UX**
+   - Designed a beautiful, responsive dark-mode interface inspired by Twitter/X and Linktree.
+   - Implemented glassmorphic cards, CSS grid backgrounds, and SVG micro-interactions without relying on heavy UI libraries.
+
+---
+
+## 🚀 Running Locally
+
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/MohitMadhu1/Eager.git
+   cd Eager
+   ```
+
+2. **Install dependencies:**
+   ```bash
+   npm install
+   ```
+
+3. **Set up environment variables:**
+   Create a `.env.local` file in the root directory and add:
+   ```env
+   NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+   NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+   RESEND_API_KEY=your_resend_api_key
+   ```
+
+4. **Run the development server:**
+   ```bash
+   npm run dev
+   ```
+   Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
