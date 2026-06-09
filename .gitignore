@@ -1,0 +1,12 @@
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Also prepare standard node/next ignores just in case
+node_modules/
+.next/
+out/
+build/
+.DS_Store
