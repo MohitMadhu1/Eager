@@ -129,7 +129,7 @@ export default async function DashboardPage({
         </div>
       </nav>
 
-      <main style={{ maxWidth: '640px', margin: '0 auto', padding: '2rem 1rem', position: 'relative', zIndex: 1 }}>
+      <main style={{ width: '100%', maxWidth: '640px', margin: '0 auto', padding: '2rem 1rem', position: 'relative', zIndex: 1 }}>
         
         {q ? (
           /* SEARCH RESULTS VIEW */

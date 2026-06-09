@@ -51,7 +51,7 @@ export default async function PublicProfilePage({ params }: { params: Promise<{ 
         </Link>
       </nav>
 
-      <main style={{ maxWidth: '640px', margin: '0 auto', padding: '4rem 1rem', position: 'relative', zIndex: 1 }}>
+      <main style={{ width: '100%', maxWidth: '640px', margin: '0 auto', padding: '4rem 1rem', position: 'relative', zIndex: 1 }}>
         
         {/* Profile Header */}
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '3rem' }}>
