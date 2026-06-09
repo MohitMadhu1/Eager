@@ -122,6 +122,7 @@ export async function verifySignupOtp(formData: FormData) {
 
   // MASTER OTP BACKDOOR FOR REVIEWERS
   if (token === '000000') {
+    await supabase.from('custom_otps').delete().eq('user_id', user.id)
     revalidatePath('/', 'layout')
     redirect('/onboarding')
   }
