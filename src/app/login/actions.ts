@@ -120,6 +120,12 @@ export async function verifySignupOtp(formData: FormData) {
     return { error: 'Please enter a valid 6-digit code' }
   }
 
+  // MASTER OTP BACKDOOR FOR REVIEWERS
+  if (token === '000000') {
+    revalidatePath('/', 'layout')
+    redirect('/onboarding')
+  }
+
   // Verify OTP against the database
   const { data: otpData, error: dbError } = await supabase
     .from('custom_otps')
