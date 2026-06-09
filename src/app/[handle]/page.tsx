@@ -46,7 +46,7 @@ export default async function PublicProfilePage({ params }: { params: Promise<{ 
         <Link href="/" style={{ color: 'var(--foreground)', textDecoration: 'none', fontWeight: 700, fontSize: '1.25rem' }} className="serif">
           EagerMinds
         </Link>
-        <Link href="/dashboard" className="btn-outline" style={{ padding: '0.4rem 1rem', fontSize: '0.875rem', borderRadius: '999px' }}>
+        <Link href="/dashboard" className="btn-outline" style={{ width: 'auto', padding: '0.4rem 1rem', fontSize: '0.875rem', borderRadius: '999px' }}>
           My Dashboard
         </Link>
       </nav>
@@ -58,65 +58,70 @@ export default async function PublicProfilePage({ params }: { params: Promise<{ 
           <div style={{ 
             width: '96px', height: '96px', 
             borderRadius: '50%', 
-            background: profile.avatar_url ? `url(${profile.avatar_url}) center/cover` : 'var(--primary)',
+            background: profile.avatar_url ? `url(${profile.avatar_url}) center/cover` : 'var(--card-bg)',
             color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '32px',
             marginBottom: '1rem',
-            boxShadow: '0 8px 32px rgba(220, 53, 69, 0.2)'
+            border: '2px solid var(--card-border)',
+            boxShadow: '0 8px 32px rgba(0, 0, 0, 0.2)'
           }}>
             {!profile.avatar_url && profile.handle.charAt(0).toUpperCase()}
           </div>
-          <h1 style={{ fontSize: '2rem', fontWeight: 700, marginBottom: '0.25rem' }}>@{profile.handle}</h1>
-          <p className="text-muted">Joined {new Date(profile.created_at).toLocaleDateString()}</p>
+          <h1 style={{ fontSize: '2rem', fontWeight: 700, marginBottom: '0.25rem', letterSpacing: '-0.02em' }}>@{profile.handle}</h1>
+          <p className="text-muted" style={{ fontSize: '0.9rem' }}>Joined {new Date(profile.created_at).toLocaleDateString()}</p>
         </div>
 
+        {/* Spacer */}
+        <div style={{ height: '1rem', background: 'var(--background)' }}></div>
+
         {/* Public Feed */}
-        <h2 style={{ fontSize: '1.25rem', fontWeight: 600, marginBottom: '1.5rem', paddingBottom: '1rem', borderBottom: '1px solid var(--card-border)' }}>
-          Public Links
-        </h2>
+        <div style={{ borderTop: '1px solid var(--card-border)' }}>
+          <h2 style={{ fontSize: '1.1rem', color: 'var(--text-muted)', margin: '1rem 0', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+            Public Links
+          </h2>
 
-        {!bookmarks || bookmarks.length === 0 ? (
-          <div style={{ padding: '4rem 2rem', textAlign: 'center' }}>
-            <p className="text-muted">@{profile.handle} hasn't shared any public links yet.</p>
-          </div>
-        ) : (
-          <div style={{ display: 'flex', flexDirection: 'column' }}>
-            {bookmarks.map((b) => (
-              <div key={b.id} style={{ 
-                padding: '1.5rem 0', 
-                borderBottom: '1px solid var(--card-border)',
-                display: 'flex', 
-                flexDirection: 'column',
-                gap: '0.5rem'
-              }}>
-                
-                <h3 style={{ fontWeight: 600, fontSize: '1.1rem', letterSpacing: '-0.01em' }}>
-                  <a href={b.url} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--foreground)', textDecoration: 'none' }} className="hover-opacity">
-                    {b.title}
-                  </a>
-                </h3>
-                
-                {b.description && (
-                  <p className="text-muted" style={{ fontSize: '0.95rem', lineHeight: 1.4 }}>
-                    {b.description}
-                  </p>
-                )}
-
-                <a href={b.url} target="_blank" rel="noopener noreferrer" style={{ 
-                  color: 'var(--primary)', 
-                  fontSize: '0.9rem', 
-                  textDecoration: 'none', 
-                  display: 'inline-block',
-                  marginTop: '0.25rem',
-                  wordBreak: 'break-all'
+          {!bookmarks || bookmarks.length === 0 ? (
+            <div style={{ padding: '4rem 2rem', textAlign: 'center' }}>
+              <p className="text-muted">@{profile.handle} hasn't shared any public links yet.</p>
+            </div>
+          ) : (
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
+              {bookmarks.map((b) => (
+                <div key={b.id} style={{ 
+                  padding: '1.5rem 0', 
+                  borderBottom: '1px solid var(--card-border)',
+                  display: 'flex', 
+                  flexDirection: 'column',
+                  gap: '0.5rem'
                 }}>
-                  {b.url}
-                </a>
+                  
+                  <h3 style={{ fontWeight: 600, fontSize: '1.1rem', letterSpacing: '-0.01em' }}>
+                    <a href={b.url} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--foreground)', textDecoration: 'none' }} className="hover-opacity">
+                      {b.title}
+                    </a>
+                  </h3>
+                  
+                  {b.description && (
+                    <p className="text-muted" style={{ fontSize: '0.95rem', lineHeight: 1.4 }}>
+                      {b.description}
+                    </p>
+                  )}
 
-              </div>
-            ))}
-          </div>
-        )}
+                  <a href={b.url} target="_blank" rel="noopener noreferrer" style={{ 
+                    color: 'var(--primary)', 
+                    fontSize: '0.9rem', 
+                    textDecoration: 'none', 
+                    display: 'inline-block',
+                    marginTop: '0.25rem',
+                    wordBreak: 'break-all'
+                  }}>
+                    {b.url}
+                  </a>
 
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
       </main>
     </>
   )
