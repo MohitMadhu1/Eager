@@ -10,6 +10,17 @@ export default async function OnboardingPage() {
     redirect('/login')
   }
 
+  // Check if they still need to verify their OTP
+  const { data: otpData } = await supabase
+    .from('custom_otps')
+    .select('user_id')
+    .eq('user_id', user.id)
+    .single()
+
+  if (otpData) {
+    redirect(`/verify-otp?email=${encodeURIComponent(user.email || '')}`)
+  }
+
   // Check if they already have a profile
   const { data: profile } = await supabase
     .from('profiles')
