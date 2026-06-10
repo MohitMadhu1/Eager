@@ -85,11 +85,21 @@ export default async function DashboardPage({
               width: '32px', height: '32px', 
               borderRadius: '50%', 
               background: profile.avatar_url ? `url(${profile.avatar_url}) center/cover` : 'var(--primary)',
-              color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '12px'
+              color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '12px', fontWeight: 600
             }}>
               {!profile.avatar_url && profile.handle.charAt(0).toUpperCase()}
             </div>
-            <Link href="/dashboard" style={{ fontWeight: 600, color: 'var(--foreground)', textDecoration: 'none' }}>@{profile.handle}</Link>
+            <Link href="/dashboard" style={{ fontWeight: 600, color: 'var(--text-muted)', textDecoration: 'none', transition: 'color 0.2s' }} className="link-hover">@{profile.handle}</Link>
+          </div>
+
+          <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
+            <Link href="/dashboard" style={{ fontWeight: 600, color: 'var(--foreground)', textDecoration: 'none', position: 'relative' }}>
+              Home
+              <div style={{ position: 'absolute', bottom: '-12px', left: 0, right: 0, height: '2px', background: 'var(--primary)', borderRadius: '2px' }}></div>
+            </Link>
+            <Link href="/explore" style={{ fontWeight: 500, color: 'var(--text-muted)', textDecoration: 'none' }} className="hover-opacity">
+              Explore
+            </Link>
           </div>
 
           {/* Search Bar directly in Nav */}

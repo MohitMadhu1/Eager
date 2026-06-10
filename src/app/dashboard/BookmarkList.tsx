@@ -156,7 +156,7 @@ export function BookmarkList({ bookmarks }: { bookmarks: Bookmark[] }) {
                 </form>
               ) : (
                 <div style={{ flex: 1, marginRight: '1rem', display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
-                  <h3 style={{ fontWeight: 600, fontSize: '1.15rem', letterSpacing: '-0.02em', wordBreak: 'break-word', color: 'var(--foreground)' }}>
+                  <h3 style={{ fontWeight: 600, fontSize: '1.15rem', letterSpacing: '-0.02em', wordBreak: 'break-word', color: 'var(--foreground)', fontFamily: 'Inter, system-ui, sans-serif' }}>
                     {b.title}
                   </h3>
                   {b.folder && activeFolder === null && (
