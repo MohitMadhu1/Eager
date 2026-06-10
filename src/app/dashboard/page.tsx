@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { logout } from '@/app/login/actions'
 import { BookmarkForm } from './BookmarkForm'
 import { BookmarkList } from './BookmarkList'
+import { SearchInput } from '@/components/SearchInput'
 
 export default async function DashboardPage({
   searchParams,
@@ -95,28 +96,19 @@ export default async function DashboardPage({
           </div>
 
           {/* Search Bar directly in Nav */}
-          <form action="/dashboard" method="GET" style={{ maxWidth: '400px', width: '100%', position: 'relative', display: 'flex', alignItems: 'center' }}>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ position: 'absolute', left: '0.75rem', color: 'var(--text-muted)' }}>
-              <circle cx="11" cy="11" r="8"></circle>
-              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-            </svg>
-            <input 
-              type="text" 
-              name="q" 
-              defaultValue={q} 
+          <div style={{ maxWidth: '400px', width: '100%', display: 'flex', alignItems: 'center' }}>
+            <SearchInput 
+              initialValue={q} 
               placeholder="Search EagerMinds..." 
               style={{
                 width: '100%',
-                padding: '0.5rem 1rem 0.5rem 2.5rem',
+                borderRadius: '999px',
                 fontSize: '0.9rem',
                 background: 'rgba(255,255,255,0.05)',
-                border: '1px solid var(--card-border)',
-                borderRadius: '999px',
-                color: 'var(--foreground)',
-                outline: 'none',
+                border: '1px solid var(--card-border)'
               }}
             />
-          </form>
+          </div>
         </div>
         
         <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>

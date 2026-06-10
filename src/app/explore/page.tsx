@@ -3,6 +3,7 @@ import { createClient } from '@/utils/supabase/server'
 import Link from 'next/link'
 import { logout } from '@/app/login/actions'
 import { toggleLike } from '@/app/dashboard/actions'
+import { SearchInput } from '@/components/SearchInput'
 
 export default async function ExplorePage({
   searchParams,
@@ -123,25 +124,15 @@ export default async function ExplorePage({
           {/* Search & Sort Filters */}
           <form action="/explore" method="GET" style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
             <div style={{ position: 'relative' }}>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ position: 'absolute', left: '0.75rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }}>
-                <circle cx="11" cy="11" r="8"></circle>
-                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-              </svg>
-              <input 
-                type="text" 
-                name="q" 
-                defaultValue={q} 
+              <SearchInput 
+                initialValue={q} 
                 placeholder="Search..." 
                 style={{
-                  padding: '0.5rem 1rem 0.5rem 2.25rem',
+                  width: '200px',
+                  borderRadius: '8px',
                   fontSize: '0.85rem',
                   background: 'rgba(255,255,255,0.03)',
-                  border: '1px solid rgba(255,255,255,0.08)',
-                  borderRadius: '8px',
-                  color: 'var(--foreground)',
-                  outline: 'none',
-                  width: '200px',
-                  fontFamily: 'Inter, system-ui, sans-serif'
+                  border: '1px solid rgba(255,255,255,0.08)'
                 }}
               />
             </div>
