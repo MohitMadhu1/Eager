@@ -12,6 +12,7 @@ export async function addBookmark(formData: FormData) {
   const url = formData.get('url') as string
   const title = formData.get('title') as string
   const description = formData.get('description') as string
+  const folder = formData.get('folder') as string
 
   if (!url || !title) {
     return { error: 'URL and Title are required' }
@@ -30,6 +31,7 @@ export async function addBookmark(formData: FormData) {
       url: cleanUrl,
       title,
       description: description || null,
+      folder: folder ? folder.trim() : null,
       is_public: false // Default to private
     }])
 
@@ -90,6 +92,7 @@ export async function editBookmark(id: string, formData: FormData) {
 
   const title = formData.get('title') as string
   const description = formData.get('description') as string
+  const folder = formData.get('folder') as string
 
   if (!title) {
     return { error: 'Title is required' }
@@ -97,7 +100,11 @@ export async function editBookmark(id: string, formData: FormData) {
 
   const { error } = await supabase
     .from('bookmarks')
-    .update({ title, description: description || null })
+    .update({ 
+      title, 
+      description: description || null,
+      folder: folder ? folder.trim() : null
+    })
     .eq('id', id)
     .eq('user_id', user.id) // Ensure they own it
 

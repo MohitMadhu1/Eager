@@ -129,11 +129,11 @@ export default async function DashboardPage({
         </div>
       </nav>
 
-      <main style={{ width: '100%', maxWidth: '640px', margin: '0 auto', padding: '2rem 1rem', position: 'relative', zIndex: 1 }}>
+      <main style={{ width: '100%', maxWidth: '1200px', margin: '0 auto', padding: '3rem 2rem', position: 'relative', zIndex: 1 }}>
         
         {q ? (
           /* SEARCH RESULTS VIEW */
-          <div>
+          <div style={{ maxWidth: '640px', margin: '0 auto' }}>
             <h1 style={{ fontSize: '1.5rem', fontWeight: 600, marginBottom: '2rem' }}>
               Search results for "{q}"
             </h1>
@@ -227,13 +227,14 @@ export default async function DashboardPage({
           </div>
         ) : (
           /* NORMAL DASHBOARD VIEW */
-          <>
-            <BookmarkForm userAvatar={profile.avatar_url} />
-            <div style={{ height: '1rem', background: 'var(--background)' }}></div>
-            <div style={{ borderTop: '1px solid var(--card-border)' }}>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4rem', alignItems: 'flex-start' }}>
+            <div style={{ flex: '1 1 350px', position: 'sticky', top: '100px' }}>
+              <BookmarkForm userAvatar={profile.avatar_url} />
+            </div>
+            <div style={{ flex: '2 1 500px' }}>
               <BookmarkList bookmarks={personalBookmarks} />
             </div>
-          </>
+          </div>
         )}
 
       </main>
