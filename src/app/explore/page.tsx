@@ -202,10 +202,16 @@ export default async function ExplorePage({
                   <div style={{ 
                     width: '24px', height: '24px', 
                     borderRadius: '50%', 
-                    background: b.profiles.avatar_url ? `url(${b.profiles.avatar_url}) center/cover` : 'var(--primary)',
-                    color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '10px', fontWeight: 600
+                    background: 'var(--primary)',
+                    color: '#000', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '10px', fontWeight: 600,
+                    overflow: 'hidden',
+                    flexShrink: 0
                   }}>
-                    {!b.profiles.avatar_url && b.profiles.handle.charAt(0).toUpperCase()}
+                    {b.profiles.avatar_url ? (
+                      <img src={b.profiles.avatar_url} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    ) : (
+                      b.profiles.handle.charAt(0).toUpperCase()
+                    )}
                   </div>
                   <Link href={`/${b.profiles.handle}`} style={{ color: 'var(--text-muted)', textDecoration: 'none', fontSize: '0.9rem', fontWeight: 500 }} className="hover-opacity">
                     @{b.profiles.handle}

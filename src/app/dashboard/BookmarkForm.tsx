@@ -30,13 +30,16 @@ export function BookmarkForm({ userAvatar }: { userAvatar?: string | null }) {
         <div style={{ 
           width: '44px', height: '44px', 
           borderRadius: '50%', 
-          background: userAvatar ? `url(${userAvatar}) center/cover` : 'var(--card-border)',
+          background: 'var(--card-border)',
           flexShrink: 0,
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           color: 'var(--text-muted)',
-          boxShadow: '0 2px 8px rgba(0,0,0,0.2)'
+          boxShadow: '0 2px 8px rgba(0,0,0,0.2)',
+          overflow: 'hidden'
         }}>
-          {!userAvatar && (
+          {userAvatar ? (
+            <img src={userAvatar} alt="Profile" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+          ) : (
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
               <circle cx="12" cy="7" r="4"></circle>
@@ -152,7 +155,7 @@ export function BookmarkForm({ userAvatar }: { userAvatar?: string | null }) {
               className="hover-opacity"
               style={{ 
                 background: 'var(--primary)',
-                color: '#fff',
+                color: '#000',
                 border: 'none',
                 width: 'auto', 
                 padding: '0.5rem 1.5rem', 

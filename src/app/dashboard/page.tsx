@@ -81,14 +81,6 @@ export default async function DashboardPage({
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem', flex: 1 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-            <div style={{ 
-              width: '32px', height: '32px', 
-              borderRadius: '50%', 
-              background: profile.avatar_url ? `url(${profile.avatar_url}) center/cover` : 'var(--primary)',
-              color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '12px', fontWeight: 600
-            }}>
-              {!profile.avatar_url && profile.handle.charAt(0).toUpperCase()}
-            </div>
             <Link href="/dashboard" style={{ fontWeight: 600, color: 'var(--text-muted)', textDecoration: 'none', transition: 'color 0.2s' }} className="link-hover">@{profile.handle}</Link>
           </div>
 

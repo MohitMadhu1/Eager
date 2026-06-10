@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { createClient } from '@/utils/supabase/server'
+import Beams from '@/components/Beams'
 
 export default async function HomePage() {
   const supabase = await createClient()
@@ -7,8 +8,18 @@ export default async function HomePage() {
 
   return (
     <>
-      <div className="bg-grid"></div>
-      <div className="bg-glow"></div>
+      <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', zIndex: 0 }}>
+        <Beams 
+          beamWidth={3}
+          beamHeight={20}
+          beamNumber={40}
+          lightColor="#ffffff"
+          speed={2}
+          noiseIntensity={1.75}
+          scale={0.2}
+          rotation={0}
+        />
+      </div>
       
       {/* Navigation Bar */}
       <nav style={{
@@ -19,11 +30,11 @@ export default async function HomePage() {
         position: 'fixed',
         top: 0, left: 0, right: 0,
         zIndex: 10,
-        background: 'linear-gradient(to bottom, rgba(10, 10, 15, 0.9), transparent)',
-        backdropFilter: 'blur(8px)'
+        background: 'transparent',
+        fontFamily: 'Inter, system-ui, sans-serif'
       }}>
-        <div style={{ fontWeight: 700, fontSize: '1.25rem', letterSpacing: '-0.02em' }}>
-          <span className="gradient-text">Eager</span>Minds
+        <div style={{ fontWeight: 800, fontSize: '1.25rem', letterSpacing: '-0.02em', color: '#fff' }}>
+          EagerMinds
         </div>
         
         <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
@@ -33,10 +44,10 @@ export default async function HomePage() {
             </Link>
           ) : (
             <>
-              <Link href="/login" style={{ color: 'var(--foreground)', fontWeight: 500, padding: '0.5rem 1rem', whiteSpace: 'nowrap' }}>
+              <Link href="/login" style={{ color: 'rgba(255,255,255,0.8)', fontWeight: 500, padding: '0.5rem 1rem', whiteSpace: 'nowrap', textDecoration: 'none' }} className="hover-opacity">
                 Log in
               </Link>
-              <Link href="/signup" className="btn-primary" style={{ padding: '0.5rem 1.25rem' }}>
+              <Link href="/signup" className="btn-primary" style={{ padding: '0.5rem 1.25rem', background: '#fff', color: '#000', border: 'none' }}>
                 Sign up
               </Link>
             </>
@@ -51,52 +62,39 @@ export default async function HomePage() {
         alignItems: 'center', 
         justifyContent: 'center', 
         minHeight: '100vh',
-        padding: '6rem 2rem 2rem 2rem',
+        padding: '2rem',
         textAlign: 'center',
         position: 'relative',
-        zIndex: 1
+        zIndex: 1,
+        fontFamily: 'Inter, system-ui, sans-serif'
       }}>
         
-        <div style={{ maxWidth: '700px', width: '100%' }}>
+        <div style={{ maxWidth: '800px', width: '100%' }}>
           
-          <div style={{
-            display: 'inline-block',
-            padding: '0.35rem 1rem',
-            background: 'var(--card-bg)',
-            border: '1px solid var(--card-border)',
-            borderRadius: '999px',
-            color: 'var(--text-muted)',
-            fontSize: '0.875rem',
-            fontWeight: 500,
-            marginBottom: '2rem'
-          }}>
-            Welcome to the Take-Home Task
-          </div>
-
           <h1 style={{ 
-            fontSize: 'clamp(2.5rem, 6vw, 4.5rem)', 
+            fontSize: 'clamp(3rem, 8vw, 6rem)', 
             fontWeight: 800, 
-            lineHeight: 1.15,
-            marginBottom: '1.5rem',
-            letterSpacing: '-0.03em'
+            lineHeight: 1.1,
+            marginBottom: '3rem',
+            letterSpacing: '-0.04em',
+            color: '#fff',
+            textShadow: '0 10px 40px rgba(0,0,0,0.5)'
           }}>
-            Your personal corner <br />
-            of the <span className="gradient-text">internet.</span>
+            Curate the web.
           </h1>
           
-          <p className="text-muted" style={{ 
-            fontSize: '1.25rem', 
-            marginBottom: '3rem', 
-            lineHeight: 1.6,
-            maxWidth: '550px',
-            margin: '0 auto 3rem auto'
-          }}>
-            Save your favorite links privately, or claim a unique handle to share your curated collections with the world.
-          </p>
-
           {!user && (
             <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center' }}>
-              <Link href="/signup" className="btn-primary" style={{ width: 'auto', padding: '1rem 2rem', fontSize: '1.125rem' }}>
+              <Link href="/signup" className="hover-opacity" style={{ 
+                background: '#fff', 
+                color: '#000', 
+                padding: '1.25rem 2.5rem', 
+                fontSize: '1.15rem',
+                fontWeight: 600,
+                borderRadius: '999px',
+                textDecoration: 'none',
+                boxShadow: '0 8px 30px rgba(255,255,255,0.2)'
+              }}>
                 Claim your @handle
               </Link>
             </div>
