@@ -2,6 +2,7 @@ import { redirect } from 'next/navigation'
 import { createClient } from '@/utils/supabase/server'
 import Link from 'next/link'
 import { logout } from '@/app/login/actions'
+import { toggleLike } from '@/app/dashboard/actions'
 
 export default async function ExplorePage({
   searchParams,
@@ -37,7 +38,7 @@ export default async function ExplorePage({
   // Build the global bookmarks query
   let query = supabase
     .from('bookmarks')
-    .select('*, profiles!inner(handle, avatar_url)', { count: 'exact' })
+    .select('*, profiles!inner(handle, avatar_url), likes(user_id)', { count: 'exact' })
     .eq('is_public', true)
 
   if (q) {
@@ -183,7 +184,12 @@ export default async function ExplorePage({
               {q && <p className="text-muted" style={{ marginTop: '0.5rem', fontSize: '0.9rem' }}>Try adjusting your search filters.</p>}
             </div>
           ) : (
-            globalBookmarks.map((b) => (
+            globalBookmarks.map((b) => {
+              const likeCount = b.likes ? b.likes.length : 0
+              const isLikedByMe = b.likes ? b.likes.some((l: any) => l.user_id === user.id) : false
+              const handleLike = toggleLike.bind(null, b.id)
+              
+              return (
               <div key={b.id} style={{ 
                 padding: '1.5rem 0', 
                 borderBottom: '1px solid rgba(255,255,255,0.06)',
@@ -226,26 +232,60 @@ export default async function ExplorePage({
                   </p>
                 )}
 
-                <a href={b.url} target="_blank" rel="noopener noreferrer" className="link-hover" style={{ 
-                  color: 'var(--text-muted)', 
-                  fontSize: '0.85rem', 
-                  textDecoration: 'none', 
-                  wordBreak: 'break-all',
-                  transition: 'color 0.2s ease',
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '0.35rem',
-                  marginTop: '0.5rem',
-                  fontFamily: 'Inter, system-ui, sans-serif'
-                }}>
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
-                    <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
-                  </svg>
-                  {b.url.replace(/^https?:\/\//i, '')}
-                </a>
+                {b.og_image_url && (
+                  <a href={b.url} target="_blank" rel="noopener noreferrer" style={{ display: 'block', width: '100%', marginTop: '0.75rem', marginBottom: '0.25rem' }} className="hover-opacity">
+                    <img 
+                      src={b.og_image_url} 
+                      alt={b.title} 
+                      style={{ width: '100%', maxHeight: '250px', objectFit: 'cover', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.08)', background: 'rgba(255,255,255,0.02)' }} 
+                    />
+                  </a>
+                )}
+
+                <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center', marginTop: '0.5rem' }}>
+                  <form action={handleLike}>
+                    <button type="submit" className="hover-opacity" style={{ 
+                      background: isLikedByMe ? 'rgba(239, 68, 68, 0.1)' : 'transparent',
+                      border: `1px solid ${isLikedByMe ? 'rgba(239, 68, 68, 0.3)' : 'rgba(255,255,255,0.1)'}`,
+                      color: isLikedByMe ? '#ef4444' : 'var(--text-muted)',
+                      borderRadius: '999px',
+                      padding: '0.3rem 0.75rem',
+                      fontSize: '0.85rem',
+                      fontWeight: 500,
+                      cursor: 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '0.35rem',
+                      fontFamily: 'Inter, system-ui, sans-serif',
+                      transition: 'all 0.2s'
+                    }}>
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill={isLikedByMe ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                      </svg>
+                      {likeCount}
+                    </button>
+                  </form>
+
+                  <a href={b.url} target="_blank" rel="noopener noreferrer" className="link-hover" style={{ 
+                    color: 'var(--text-muted)', 
+                    fontSize: '0.85rem', 
+                    textDecoration: 'none', 
+                    wordBreak: 'break-all',
+                    transition: 'color 0.2s ease',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '0.35rem',
+                    fontFamily: 'Inter, system-ui, sans-serif'
+                  }}>
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                      <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+                    </svg>
+                    {b.url.replace(/^https?:\/\//i, '')}
+                  </a>
+                </div>
               </div>
-            ))
+            )})
           )}
         </div>
 

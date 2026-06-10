@@ -11,6 +11,7 @@ type Bookmark = {
   folder: string | null
   is_public: boolean
   created_at: string
+  og_image_url?: string | null
 }
 
 export function BookmarkList({ bookmarks }: { bookmarks: Bookmark[] }) {
@@ -218,6 +219,16 @@ export function BookmarkList({ bookmarks }: { bookmarks: Bookmark[] }) {
               <p style={{ fontSize: '0.95rem', lineHeight: 1.5, color: 'var(--text-muted)', wordBreak: 'break-word', marginTop: '0.25rem' }}>
                 {b.description}
               </p>
+            )}
+
+            {b.og_image_url && editingId !== b.id && (
+              <a href={b.url} target="_blank" rel="noopener noreferrer" style={{ display: 'block', width: '100%', marginTop: '0.75rem', marginBottom: '0.25rem' }} className="hover-opacity">
+                <img 
+                  src={b.og_image_url} 
+                  alt={b.title} 
+                  style={{ width: '100%', maxHeight: '200px', objectFit: 'cover', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.08)', background: 'rgba(255,255,255,0.02)' }} 
+                />
+              </a>
             )}
 
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '0.5rem' }}>
