@@ -178,7 +178,7 @@ export default async function ExplorePage({
             globalBookmarks.map((b) => {
               const likeCount = b.likes ? b.likes.length : 0
               const isLikedByMe = b.likes ? b.likes.some((l: any) => l.user_id === user.id) : false
-              const handleLike = toggleLike.bind(null, b.id)
+              const handleLike = toggleLike.bind(null, b.id) as () => void
               
               return (
               <div key={b.id} style={{ 
